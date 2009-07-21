@@ -1,0 +1,50 @@
+global: &global
+  project: Indigo
+  dir:
+    build: build
+    test_results: build/test-results
+    deploy: deploy
+    source: source
+    app: source/app
+    test: source/test
+  build:
+    configuration: Debug
+  database:
+    server: (local)
+    name: Indigo
+    sspi: true
+    scripts: source/database
+    sample_data: source/database/sample data
+  deployment:
+    location: 
+  tools:
+    tarantino: tools/Tarantino/Tarantino.Console.exe
+    mspec: tools/Machine.Specifications/Machine.Specifications.ConsoleRunner.exe
+    cloc: tools/CLOC/cloc.exe
+    ncover: tools/NCover/NCover.Console.exe
+    ncoverexplorer: tools/NCoverExplorer/NCoverExplorer.Console.exe
+    zip: tools/7-Zip/7za.exe
+    fxcop: tools/FxCop/FxCopCmd.exe
+    stylecop: tools/StyleCop/StyleCopCmd.exe
+    sqlpubwiz: tools/SqlPubWiz/SqlPubWiz.exe
+  log4net:
+    level:
+      app: DEBUG
+      nh: WARN
+      nh_sql: "OFF"
+  
+development:
+  <<: *global
+
+test:
+  <<: *global
+  database:
+    server: W2K3-SQL\TEST
+    name: Indigo_BuildAgent_<%= ENV['COMPUTERNAME'].gsub(/-/, '_') %>
+
+production:
+  <<: *global
+  build:
+    configuration: Release  
+  database:
+    server: .\SQLExpress

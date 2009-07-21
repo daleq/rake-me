@@ -1,0 +1,9 @@
+# Overwrite various settings from 'properties.yml' here. There is no key (global, development, test, etc.) needed,
+# that is, the currently used configuration is patched with the values found here.
+#
+# IMPORTANT: Do not check into source control!
+#
+ 
+# Example:
+build:
+  dir: overwritten-with-this-value

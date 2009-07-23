@@ -31,6 +31,8 @@ class FxCop
 				# Re-run silently to generate an XML report to query later.
 				sh "#{fxcop.escape} /quiet #{"/project:#{project.escape}"} #{'/ignoregeneratedcode' if ignoreGeneratedCode} #{"/out:#{report.ext('xml').escape}"} #{assemblies.map do |f| "/f:#{f.to_absolute.escape}" end } /successfile" \
 			
+				TeamCity.import_data 'FxCop', report.ext('xml')
+				
 				doc = Document.new(File.read(report.ext('xml')))
 				violations = XPath.first doc, 'count(.//Message)' || 0
 			end

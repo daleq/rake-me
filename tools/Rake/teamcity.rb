@@ -16,6 +16,10 @@ module TeamCity
 		puts "##teamcity[buildStatisticValue key='#{key.to_s.encode}' value='#{value.to_s.encode}']" if ENV['TEAMCITY_PROJECT_NAME']
 	end
 	
+	def self.import_data(type = '', path = '')
+		puts "##teamcity[importData type='#{type.to_s.encode}' path='#{path.to_s.encode}']" if ENV['TEAMCITY_PROJECT_NAME']
+	end
+	
 	def self.append_build_status_text(text = '')
 		return if not ENV['TEAMCITY_PROJECT_NAME']
 		

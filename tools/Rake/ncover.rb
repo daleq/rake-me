@@ -62,8 +62,11 @@ class NCover
 					refCount -= 1
 					
 					if refCount == 0
-						Registry::HKEY_CURRENT_USER.delete_key 'Software\KiwiNova\NCoverExplorer', true
-						Registry::HKEY_CURRENT_USER.delete_key 'Software\Classes\CLSID\{6287B5F9-08A1-45e7-9498-B5B2E7B02995}', true
+						begin
+							Registry::HKEY_CURRENT_USER.delete_key 'Software\KiwiNova\NCoverExplorer', true
+							Registry::HKEY_CURRENT_USER.delete_key 'Software\Classes\CLSID\{6287B5F9-08A1-45e7-9498-B5B2E7B02995}', true
+						rescue
+						end
 					else
 						reg.write_i 'NCoverRefCount', refCount if refCount >= 1
 					end

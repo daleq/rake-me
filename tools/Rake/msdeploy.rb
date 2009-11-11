@@ -9,9 +9,9 @@ class MSDeploy
 		switches = ""
 		
 		attributes.each do |key, value|
-			switches += "-#{key}#{":#{value}" unless value.kind_of? Hash or value.kind_of? TrueClass or value.kind_of? FalseClass}" if value
+			switches += "-#{key}#{":#{value}" unless value.kind_of? Enumerable or value.kind_of? TrueClass or value.kind_of? FalseClass}" if value
 			
-			if value.kind_of? Hash
+			if value.kind_of? Enumerable
 				switches += ":"
 				switches += value.collect { |key, value|
 					"#{key}#{"=#{value}" unless value.kind_of? TrueClass or value.kind_of? FalseClass}" if value

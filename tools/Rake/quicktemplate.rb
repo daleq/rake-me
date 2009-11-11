@@ -23,7 +23,7 @@ class QuickTemplate
 	end
 	
 	def prepare_template(template)
-		tag_regex = /(?:\W)(@\w[\w\.]+\w@)(?:\W)/
+		tag_regex = /(@\w[\w\.]+\w@)/
 		
 		hits = template.scan(tag_regex)
 		tags = hits.map do |item|

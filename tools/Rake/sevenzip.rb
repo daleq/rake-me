@@ -1,3 +1,5 @@
+require 'tempfile'
+
 class SevenZip
 	attr_accessor :tool, :args, :zipName
 	
@@ -41,8 +43,16 @@ class SevenZip
 			f.escape
 		end
 		
-		sevenZip = tool.to_absolute
-				
-		sh "#{sevenZip.escape} #{args} #{zipName.escape} #{files}"
+		Tempfile.open('random') do |f|
+			f.write files.join("\r\n")
+			f.close
+			
+			sep = File::ALT_SEPARATOR || File::SEPARATOR
+			filesToZip = f.path
+			filesToZip = filesToZip.gsub("/", sep) if File::ALT_SEPARATOR
+			
+			sevenZip = tool.to_absolute
+			sh "#{sevenZip.escape} #{args} #{zipName.escape} @#{filesToZip}"
+		end
 	end
 end

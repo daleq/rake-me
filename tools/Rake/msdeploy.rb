@@ -15,10 +15,12 @@ class MSDeploy
 		
 		sh "#{msdeploy.escape} #{switches} 2>&1 | #{tee.escape} -a #{logFile}" do
 			doc = File.read(logFile)
-			errors = doc.scan(/error|exception|fehler/i)
+			errors = doc.scan(/(\n|\s)+(error|exception|fehler)/i)
 			
 			if errors.any?
-				raise "\nDeployment errors occurred. Please review #{logFile}."
+				message = "\nLog string indicating the deployment error: #{errors.first[1]} ...and #{errors.nitems - 1} more"
+				puts message
+				raise "\nDeployment errors occurred. Please review #{logFile}." + message
 			else
 				puts "\nDeployment successful."
 			end

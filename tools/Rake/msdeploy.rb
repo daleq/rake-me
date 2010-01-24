@@ -33,7 +33,7 @@ class MSDeploy
 		attributes.each do |switch, value|
 			if value.kind_of? Array
 				switches += value.collect { |element|
-					generate_switches ({ switch => element })
+					generate_switches({ switch => element })
 				}.join
 				
 				next

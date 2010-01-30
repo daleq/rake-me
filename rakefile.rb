@@ -58,13 +58,8 @@ namespace :env do
 		env_key = env_key || 'development'
 
 		puts "Loading settings for the '#{env_key}' environment"
-		configatron.configure_from_yaml 'properties.yml', :hash => 'development'
-		configatron.configure_from_yaml 'properties.yml', :hash => env_key if env_key != 'development'
-
-		if File.exists? 'local-properties.yml'
-			puts "Loading local settings from 'local-properties.yml'"
-			configatron.configure_from_yaml 'local-properties.yml'
-		end
+		yaml = Configuration.load_yaml 'properties.yml', :hash => env_key, :inherit => :default_to, :override_with => :local_properties
+		configatron.configure_from_hash yaml
 		
 		configatron.build.number = ENV['BUILD_NUMBER']
 		configatron.database.connectionstring = "Data Source=#{configatron.database.server}; Initial Catalog=#{configatron.database.name}; #{'Integrated Security=true; ' if configatron.database.sspi} Persist Security Info=False;"

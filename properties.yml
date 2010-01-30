@@ -1,4 +1,4 @@
-global: &global
+global:
   project: Indigo
   dir:
     build: build
@@ -34,16 +34,16 @@ global: &global
       nh_sql: "OFF"
   
 development:
-  <<: *global
+  default_to: global
 
 test:
-  <<: *global
+  default_to: global
   database:
     server: W2K3-SQL\TEST
     name: Indigo_BuildAgent_<%= ENV['COMPUTERNAME'].gsub(/-/, '_') %>
 
 production:
-  <<: *global
+  default_to: global
   build:
     configuration: Release  
   database:
